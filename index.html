@@ -22,11 +22,59 @@ body {
     background: linear-gradient(135deg, #12061f, #1b0b33, #12061f);
     color: #ffffff;
     min-height: 100vh;
+    overflow-x: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* layout */
+.wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+.main {
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main.shifted {
+    transform: translateX(-420px);
+}
+
+/* right panel */
+.panel {
+    position: absolute;
+    top: 0;
+    right: -420px;
+    width: 420px;
+    height: 100%;
+    background: linear-gradient(180deg, rgba(40,20,80,0.95), rgba(25,10,50,0.95));
+    border-left: 2px solid rgba(168, 85, 247, 0.35);
+    padding: 45px 35px;
+    transition: right 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.panel.open {
+    right: 0;
+}
+
+.panel h3 {
+    font-size: 1.7rem;
+    margin-bottom: 25px;
+    color: #d8b4fe;
+}
+
+.panel p {
+    font-size: 1rem;
+    color: #d6d2ff;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* container */
 .container {
     max-width: 900px;
     padding: 40px;
@@ -36,7 +84,7 @@ body {
 .logo {
     font-size: 3.2rem;
     font-weight: 800;
-    background: linear-gradient(45deg, #a855f7, #c084fc);
+    background: linear-gradient(45deg, #a855f7, #e9d5ff);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin-bottom: 12px;
@@ -44,29 +92,31 @@ body {
 
 .subtitle {
     font-size: 1.25rem;
-    color: #d8d3ff;
-    opacity: 0.95;
+    color: #e4ddff;
     margin-bottom: 45px;
 }
 
+/* card */
 .card {
-    background: rgba(140, 90, 255, 0.08);
-    border: 2px solid rgba(168, 85, 247, 0.22);
+    background: rgba(150, 100, 255, 0.1);
+    border: 2px solid rgba(168, 85, 247, 0.3);
     border-radius: 28px;
     padding: 45px;
-    box-shadow: 0 25px 70px rgba(140, 90, 255, 0.35);
+    box-shadow:
+        0 30px 80px rgba(168, 85, 247, 0.45),
+        inset 0 1px 0 rgba(255,255,255,0.08);
 }
 
 .card h2 {
     font-size: 2.2rem;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .version {
     display: inline-block;
-    padding: 10px 26px;
+    padding: 10px 28px;
     border-radius: 30px;
-    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    background: linear-gradient(135deg, #8b5cf6, #c084fc);
     font-weight: 600;
     margin: 18px 0;
 }
@@ -78,7 +128,7 @@ body {
 .badge {
     display: inline-block;
     margin: 8px;
-    padding: 10px 22px;
+    padding: 10px 24px;
     border-radius: 22px;
     font-weight: 600;
     font-size: 0.95rem;
@@ -94,59 +144,64 @@ body {
 
 .description {
     font-size: 1.1rem;
-    color: #d6d2ff;
+    color: #ebe7ff;
     line-height: 1.75;
     margin: 30px 0;
 }
 
+/* buttons */
 .buttons {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 22px;
     flex-wrap: wrap;
 }
 
 .button {
-    padding: 20px 55px;
+    padding: 20px 60px;
     border-radius: 50px;
-    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    background: linear-gradient(135deg, #9f67ff, #c084fc);
     color: #fff;
     font-size: 1.15rem;
     font-weight: 700;
     text-decoration: none;
-    transition: 0.3s ease;
-    box-shadow: 0 15px 40px rgba(168, 85, 247, 0.55);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 18px 45px rgba(192, 132, 252, 0.65);
 }
 
 .button:hover {
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 22px 60px rgba(168, 85, 247, 0.85);
+    transform: translateY(-5px) scale(1.04);
+    box-shadow:
+        0 28px 70px rgba(216, 180, 254, 0.95);
 }
 
-.section {
-    margin-top: 55px;
-}
-
-.section h3 {
-    font-size: 1.6rem;
-    margin-bottom: 15px;
-    color: #c084fc;
-}
-
-.links a {
-    display: block;
-    margin: 8px 0;
-    color: #a855f7;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.25s ease;
-}
-
-.links a:hover {
+/* more button */
+.more-btn {
+    margin-top: 35px;
+    display: inline-block;
+    padding: 14px 40px;
+    border-radius: 30px;
+    border: 2px solid rgba(192,132,252,0.5);
     color: #e9d5ff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* subtle custom cursor */
+.more-btn:hover {
+    background: rgba(192,132,252,0.15);
+    box-shadow: 0 0 25px rgba(192,132,252,0.6);
+}
+
+/* panel buttons */
+.panel .button {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+/* cursor */
 #cursor {
     position: fixed;
     width: 8px;
@@ -165,60 +220,90 @@ body {
 
 <div id="cursor"></div>
 
-<div class="container">
-    <div class="logo">EURO TRUCK SIMULATOR 2</div>
-    <div class="subtitle">
-        TruckersMP Latest DLC Downloader - By @vxnity @danillCO @otherbastards
+<div class="wrapper">
+    <div class="main" id="main">
+        <div class="container">
+            <div class="logo">EURO TRUCK SIMULATOR 2</div>
+            <div class="subtitle">
+                TruckersMP Latest DLC Downloader - By @vxnity @danillCO @otherbastards
+            </div>
+
+            <div class="card">
+                <h2>Cracked DLC + storage.dll</h2>
+                <div class="version">v1.57.2.x</div>
+
+                <div class="badges">
+                    <span class="badge green">Compatible with TruckersMP</span>
+                    <span class="badge red">DETECTABLE</span>
+                </div>
+
+                <div class="description">
+                    Latest DLC package including storage.dll.
+                    Optimized for TruckersMP usage.
+                </div>
+
+                <div class="buttons">
+                    <a class="button" href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank">
+                        DOWNLOAD DLC
+                    </a>
+                    <a class="button" href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank">
+                        DOWNLOAD storage.dll
+                    </a>
+                </div>
+
+                <div class="more-btn" id="openPanel">
+                    MORE LINKS
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="card">
-        <h2>Cracked DLC + storage.dll</h2>
-        <div class="version">v1.57.2.x</div>
+    <div class="panel" id="panel">
+        <h3>Community & Profiles</h3>
+        <p>
+            Join the community servers or check related profiles and resources.
+        </p>
 
-        <div class="badges">
-            <span class="badge green">Compatible with TruckersMP</span>
-            <span class="badge red">DETECTABLE</span>
-        </div>
+        <a class="button" href="https://discord.gg/tCxpFmD6r3" target="_blank">
+            DISCORD SERVER 1
+        </a>
+        <a class="button" href="https://discord.gg/9fkQTfTMqt" target="_blank">
+            DISCORD SERVER 2
+        </a>
+        <a class="button" href="https://guns.lol/vxnitxyz" target="_blank">
+            GUNS.LOL VX NITXYZ
+        </a>
+        <a class="button" href="https://guns.lol/gans.lol" target="_blank">
+            GUNS.LOL GANS
+        </a>
 
-        <div class="description">
-            Latest cracked DLC package including storage.dll.
-            Designed for TruckersMP usage. Use at your own risk.
-        </div>
-
-        <div class="buttons">
-            <a class="button" href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank">
-                DOWNLOAD DLC
-            </a>
-            <a class="button" href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank">
-                DOWNLOAD storage.dll
-            </a>
-        </div>
-    </div>
-
-    <div class="section">
-        <h3>Discord Servers</h3>
-        <div class="links">
-            <a href="https://discord.gg/tCxpFmD6r3" target="_blank">discord.gg/tCxpFmD6r3</a>
-            <a href="https://discord.gg/9fkQTfTMqt" target="_blank">discord.gg/9fkQTfTMqt</a>
-        </div>
-    </div>
-
-    <div class="section">
-        <h3>Links</h3>
-        <div class="links">
-            <a href="https://guns.lol/vxnitxyz" target="_blank">guns.lol/vxnitxyz</a>
-            <a href="https://guns.lol/gans.lol" target="_blank">guns.lol/gans.lol</a>
+        <div class="more-btn" id="closePanel">
+            CLOSE
         </div>
     </div>
 </div>
 
 <script>
 const cursor = document.getElementById("cursor");
-
 document.addEventListener("mousemove", e => {
     cursor.style.left = e.clientX + "px";
     cursor.style.top = e.clientY + "px";
 });
+
+const openBtn = document.getElementById("openPanel");
+const closeBtn = document.getElementById("closePanel");
+const main = document.getElementById("main");
+const panel = document.getElementById("panel");
+
+openBtn.onclick = () => {
+    main.classList.add("shifted");
+    panel.classList.add("open");
+};
+
+closeBtn.onclick = () => {
+    main.classList.remove("shifted");
+    panel.classList.remove("open");
+};
 </script>
 
 </body>
