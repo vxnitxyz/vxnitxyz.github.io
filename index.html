@@ -19,57 +19,56 @@ html, body {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #140726, #1f0d3d, #140726);
+    background: linear-gradient(135deg, #12061f, #1b0b33, #12061f);
     color: #ffffff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow-x: hidden;
 }
 
 .container {
     max-width: 900px;
-    text-align: center;
     padding: 40px;
+    text-align: center;
 }
 
 .logo {
-    font-size: 3.4rem;
+    font-size: 3.2rem;
     font-weight: 800;
     background: linear-gradient(45deg, #a855f7, #c084fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 .subtitle {
     font-size: 1.25rem;
-    color: #d1c7ff;
-    margin-bottom: 45px;
+    color: #d8d3ff;
     opacity: 0.95;
+    margin-bottom: 45px;
 }
 
 .card {
-    background: rgba(120, 80, 255, 0.08);
-    border: 2px solid rgba(168, 85, 247, 0.25);
+    background: rgba(140, 90, 255, 0.08);
+    border: 2px solid rgba(168, 85, 247, 0.22);
     border-radius: 28px;
     padding: 45px;
-    box-shadow: 0 25px 70px rgba(138, 43, 226, 0.35);
+    box-shadow: 0 25px 70px rgba(140, 90, 255, 0.35);
 }
 
-.title {
+.card h2 {
     font-size: 2.2rem;
     margin-bottom: 10px;
 }
 
 .version {
     display: inline-block;
-    margin: 15px 0;
     padding: 10px 26px;
     border-radius: 30px;
     background: linear-gradient(135deg, #8b5cf6, #a855f7);
     font-weight: 600;
+    margin: 18px 0;
 }
 
 .badges {
@@ -85,25 +84,25 @@ body {
     font-size: 0.95rem;
 }
 
-.green {
+.badge.green {
     background: linear-gradient(135deg, #10b981, #059669);
 }
 
-.red {
+.badge.red {
     background: linear-gradient(135deg, #ef4444, #b91c1c);
 }
 
 .description {
     font-size: 1.1rem;
     color: #d6d2ff;
-    line-height: 1.8;
+    line-height: 1.75;
     margin: 30px 0;
 }
 
 .buttons {
     display: flex;
-    gap: 20px;
     justify-content: center;
+    gap: 20px;
     flex-wrap: wrap;
 }
 
@@ -111,16 +110,16 @@ body {
     padding: 20px 55px;
     border-radius: 50px;
     background: linear-gradient(135deg, #8b5cf6, #a855f7);
-    color: white;
+    color: #fff;
     font-size: 1.15rem;
     font-weight: 700;
     text-decoration: none;
     transition: 0.3s ease;
-    box-shadow: 0 15px 40px rgba(168, 85, 247, 0.6);
+    box-shadow: 0 15px 40px rgba(168, 85, 247, 0.55);
 }
 
 .button:hover {
-    transform: translateY(-5px) scale(1.03);
+    transform: translateY(-4px) scale(1.03);
     box-shadow: 0 22px 60px rgba(168, 85, 247, 0.85);
 }
 
@@ -130,16 +129,16 @@ body {
 
 .section h3 {
     font-size: 1.6rem;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
     color: #c084fc;
 }
 
 .links a {
     display: block;
+    margin: 8px 0;
     color: #a855f7;
     text-decoration: none;
     font-weight: 600;
-    margin: 8px 0;
     transition: 0.25s ease;
 }
 
@@ -147,36 +146,17 @@ body {
     color: #e9d5ff;
 }
 
-/* Custom cursor */
+/* subtle custom cursor */
 #cursor {
     position: fixed;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     background: white;
     border-radius: 50%;
     pointer-events: none;
-    box-shadow: 0 0 15px rgba(255,255,255,0.9);
+    box-shadow: 0 0 12px rgba(255,255,255,0.9);
     transform: translate(-50%, -50%);
     z-index: 9999;
-}
-
-/* Snow particles */
-.snow {
-    position: fixed;
-    width: 4px;
-    height: 4px;
-    background: white;
-    border-radius: 50%;
-    pointer-events: none;
-    opacity: 0.8;
-    animation: fall 1.8s linear forwards;
-}
-
-@keyframes fall {
-    to {
-        transform: translateY(60px);
-        opacity: 0;
-    }
 }
 </style>
 </head>
@@ -192,7 +172,7 @@ body {
     </div>
 
     <div class="card">
-        <div class="title">Cracked DLC + storage.dll</div>
+        <h2>Cracked DLC + storage.dll</h2>
         <div class="version">v1.57.2.x</div>
 
         <div class="badges">
@@ -201,15 +181,14 @@ body {
         </div>
 
         <div class="description">
-            Download the latest cracked DLC package and storage.dll.
-            Fully usable in TruckersMP. Use at your own risk.
+            Latest cracked DLC package including storage.dll.
+            Designed for TruckersMP usage. Use at your own risk.
         </div>
 
         <div class="buttons">
             <a class="button" href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank">
                 DOWNLOAD DLC
             </a>
-
             <a class="button" href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank">
                 DOWNLOAD storage.dll
             </a>
@@ -239,14 +218,6 @@ const cursor = document.getElementById("cursor");
 document.addEventListener("mousemove", e => {
     cursor.style.left = e.clientX + "px";
     cursor.style.top = e.clientY + "px";
-
-    const snow = document.createElement("div");
-    snow.className = "snow";
-    snow.style.left = e.clientX + "px";
-    snow.style.top = e.clientY + "px";
-    document.body.appendChild(snow);
-
-    setTimeout(() => snow.remove(), 1800);
 });
 </script>
 
