@@ -3,134 +3,125 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ETS2 DLC v1.57.2.x</title>
+<title>TruckersMP DLC Downloader</title>
 
 <style>
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
 
-    /* Disable text selection everywhere */
+html, body {
+    cursor: none;
     user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    cursor: default;
-}
-
-/* Hide selection highlight completely */
-::selection {
-    background: transparent;
-}
-::-moz-selection {
-    background: transparent;
 }
 
 body {
-    font-family: Segoe UI, system-ui, sans-serif;
-    background: linear-gradient(135deg, #12061f, #1b0b30, #0f051a);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #140726, #1f0d3d, #140726);
     color: #ffffff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .container {
     max-width: 900px;
-    padding: 40px;
     text-align: center;
+    padding: 40px;
 }
 
-.title {
-    font-size: 3rem;
+.logo {
+    font-size: 3.4rem;
     font-weight: 800;
-    background: linear-gradient(90deg, #a855f7, #c084fc);
+    background: linear-gradient(45deg, #a855f7, #c084fc);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
 }
 
 .subtitle {
-    margin-top: 10px;
-    color: #a1a1aa;
-    font-size: 1.1rem;
+    font-size: 1.25rem;
+    color: #d1c7ff;
+    margin-bottom: 45px;
+    opacity: 0.95;
 }
 
 .card {
-    margin-top: 50px;
-    background: rgba(120, 70, 255, 0.08);
+    background: rgba(120, 80, 255, 0.08);
+    border: 2px solid rgba(168, 85, 247, 0.25);
     border-radius: 28px;
     padding: 45px;
-    border: 1px solid rgba(168, 85, 247, 0.25);
-    box-shadow: 0 25px 70px rgba(139,92,246,0.45);
+    box-shadow: 0 25px 70px rgba(138, 43, 226, 0.35);
 }
 
-.card h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
+.title {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
 }
 
 .version {
     display: inline-block;
-    padding: 10px 28px;
-    border-radius: 25px;
+    margin: 15px 0;
+    padding: 10px 26px;
+    border-radius: 30px;
     background: linear-gradient(135deg, #8b5cf6, #a855f7);
-    font-weight: 700;
-    margin-bottom: 25px;
+    font-weight: 600;
 }
 
 .badges {
-    margin-bottom: 25px;
+    margin: 25px 0;
 }
 
 .badge {
     display: inline-block;
-    margin: 6px;
+    margin: 8px;
     padding: 10px 22px;
     border-radius: 22px;
-    font-weight: 700;
+    font-weight: 600;
     font-size: 0.95rem;
 }
 
-.compatible {
+.green {
     background: linear-gradient(135deg, #10b981, #059669);
 }
 
-.detectable {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
+.red {
+    background: linear-gradient(135deg, #ef4444, #b91c1c);
 }
 
-.desc {
-    color: #d4d4d8;
-    line-height: 1.7;
-    margin-bottom: 35px;
-    font-size: 1.05rem;
+.description {
+    font-size: 1.1rem;
+    color: #d6d2ff;
+    line-height: 1.8;
+    margin: 30px 0;
 }
 
 .buttons {
     display: flex;
-    justify-content: center;
     gap: 20px;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
-/* Buttons must stay clickable */
-.buttons a {
-    user-select: none;
-    cursor: pointer;
-    text-decoration: none;
-    padding: 18px 55px;
+.button {
+    padding: 20px 55px;
     border-radius: 50px;
-    font-weight: 800;
-    color: #fff;
-    background: linear-gradient(135deg, #8b5cf6, #c084fc);
-    box-shadow: 0 15px 45px rgba(168,85,247,0.6);
-    transition: 0.3s;
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+    color: white;
+    font-size: 1.15rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.3s ease;
+    box-shadow: 0 15px 40px rgba(168, 85, 247, 0.6);
 }
 
-.buttons a:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 22px 65px rgba(168,85,247,0.85);
+.button:hover {
+    transform: translateY(-5px) scale(1.03);
+    box-shadow: 0 22px 60px rgba(168, 85, 247, 0.85);
 }
 
 .section {
@@ -140,58 +131,86 @@ body {
 .section h3 {
     font-size: 1.6rem;
     margin-bottom: 18px;
+    color: #c084fc;
 }
 
 .links a {
-    display: inline-block;
-    margin: 8px;
-    padding: 14px 30px;
-    border-radius: 40px;
+    display: block;
+    color: #a855f7;
     text-decoration: none;
-    font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    box-shadow: 0 12px 35px rgba(99,102,241,0.55);
-    cursor: pointer;
-    transition: 0.3s;
+    font-weight: 600;
+    margin: 8px 0;
+    transition: 0.25s ease;
 }
 
 .links a:hover {
-    transform: translateY(-4px);
+    color: #e9d5ff;
 }
 
-.footer {
-    margin-top: 60px;
-    font-size: 0.9rem;
-    color: #9ca3af;
+/* Custom cursor */
+#cursor {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 15px rgba(255,255,255,0.9);
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+}
+
+/* Snow particles */
+.snow {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.8;
+    animation: fall 1.8s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(60px);
+        opacity: 0;
+    }
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-    <div class="title">Euro Truck Simulator 2</div>
-    <div class="subtitle">Cracked DLC Package</div>
+<div id="cursor"></div>
+
+<div class="container">
+    <div class="logo">EURO TRUCK SIMULATOR 2</div>
+    <div class="subtitle">
+        TruckersMP Latest DLC Downloader - By @vxnity @danillCO @otherbastards
+    </div>
 
     <div class="card">
-        <h2>DLC Download</h2>
+        <div class="title">Cracked DLC + storage.dll</div>
         <div class="version">v1.57.2.x</div>
 
         <div class="badges">
-            <span class="badge compatible">Compatible with TruckersMP</span>
-            <span class="badge detectable">DETECTABLE</span>
+            <span class="badge green">Compatible with TruckersMP</span>
+            <span class="badge red">DETECTABLE</span>
         </div>
 
-        <div class="desc">
-            Full DLC package for ETS2 including required files for multiplayer.
+        <div class="description">
+            Download the latest cracked DLC package and storage.dll.
+            Fully usable in TruckersMP. Use at your own risk.
         </div>
 
         <div class="buttons">
-            <a href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank">
+            <a class="button" href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank">
                 DOWNLOAD DLC
             </a>
-            <a href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank">
+
+            <a class="button" href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank">
                 DOWNLOAD storage.dll
             </a>
         </div>
@@ -200,8 +219,8 @@ body {
     <div class="section">
         <h3>Discord Servers</h3>
         <div class="links">
-            <a href="https://discord.gg/tCxpFmD6r3" target="_blank">Discord 1</a>
-            <a href="https://discord.gg/9fkQTfTMqt" target="_blank">Discord 2</a>
+            <a href="https://discord.gg/tCxpFmD6r3" target="_blank">discord.gg/tCxpFmD6r3</a>
+            <a href="https://discord.gg/9fkQTfTMqt" target="_blank">discord.gg/9fkQTfTMqt</a>
         </div>
     </div>
 
@@ -212,11 +231,24 @@ body {
             <a href="https://guns.lol/gans.lol" target="_blank">guns.lol/gans.lol</a>
         </div>
     </div>
-
-    <div class="footer">
-        Maintained by vxnitxyz
-    </div>
-
 </div>
+
+<script>
+const cursor = document.getElementById("cursor");
+
+document.addEventListener("mousemove", e => {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+
+    const snow = document.createElement("div");
+    snow.className = "snow";
+    snow.style.left = e.clientX + "px";
+    snow.style.top = e.clientY + "px";
+    document.body.appendChild(snow);
+
+    setTimeout(() => snow.remove(), 1800);
+});
+</script>
+
 </body>
 </html>
