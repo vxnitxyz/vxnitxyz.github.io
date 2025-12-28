@@ -23,23 +23,25 @@ body {
     overflow-x: hidden;
 }
 
+/* ===== Subtle animated background ===== */
 body::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-        radial-gradient(circle at 20% 50%, rgba(138,43,226,0.15), transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(75,0,130,0.15), transparent 50%),
-        radial-gradient(circle at 40% 20%, rgba(147,51,234,0.1), transparent 50%);
-    animation: bgFloat 15s ease-in-out infinite;
+        radial-gradient(circle at 20% 50%, rgba(138,43,226,0.12), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(75,0,130,0.12), transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(147,51,234,0.08), transparent 50%);
+    animation: bgFloat 18s ease-in-out infinite;
     pointer-events: none;
 }
 
 @keyframes bgFloat {
-    0%,100% { opacity: 0.5; transform: scale(1); }
-    50% { opacity: 0.8; transform: scale(1.1); }
+    0%,100% { opacity: 0.35; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.05); }
 }
 
+/* ===== Page entrance ===== */
 .container {
     max-width: 900px;
     padding: 40px;
@@ -48,6 +50,27 @@ body::before {
     z-index: 1;
 }
 
+.container > * {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeUp 0.9s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+.container > *:nth-child(1) { animation-delay: 0.1s; }
+.container > *:nth-child(2) { animation-delay: 0.2s; }
+.container > *:nth-child(3) { animation-delay: 0.35s; }
+.container > *:nth-child(4) { animation-delay: 0.5s; }
+.container > *:nth-child(5) { animation-delay: 0.65s; }
+.container > *:nth-child(6) { animation-delay: 0.8s; }
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Logo ===== */
 .logo {
     font-size: 3.2rem;
     font-weight: 800;
@@ -55,7 +78,7 @@ body::before {
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    animation: shimmer 3s infinite;
+    animation: shimmer 4s ease infinite;
 }
 
 @keyframes shimmer {
@@ -69,15 +92,26 @@ body::before {
     color: #a0aec0;
 }
 
+/* ===== Card ===== */
 .card {
     margin-top: 50px;
     padding: 50px 40px;
     border-radius: 30px;
     background: rgba(139,92,246,0.08);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(18px);
     border: 2px solid rgba(168,85,247,0.2);
     box-shadow: 0 20px 60px rgba(139,92,246,0.35);
-    transition: 0.4s;
+    opacity: 0;
+    transform: scale(0.96) translateY(40px);
+    animation: cardIn 1.1s cubic-bezier(.22,1,.36,1) forwards;
+    animation-delay: 0.35s;
+}
+
+@keyframes cardIn {
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
 }
 
 .card:hover {
@@ -100,6 +134,7 @@ body::before {
     box-shadow: 0 8px 25px rgba(139,92,246,0.45);
 }
 
+/* ===== Badges ===== */
 .badge {
     display: inline-block;
     margin: 15px 5px;
@@ -125,12 +160,12 @@ body::before {
     margin: 30px 0;
 }
 
+/* ===== Buttons ===== */
 .button-group {
     display: flex;
     gap: 20px;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 20px;
 }
 
 .download-btn {
@@ -142,14 +177,15 @@ body::before {
     background: linear-gradient(135deg, #8b5cf6, #a855f7, #c084fc);
     border-radius: 50px;
     box-shadow: 0 15px 40px rgba(139,92,246,0.55);
-    transition: 0.4s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .download-btn:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 20px 55px rgba(168,85,247,0.75);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: 0 22px 60px rgba(168,85,247,0.75);
 }
 
+/* ===== Sections ===== */
 .section {
     margin-top: 60px;
 }
@@ -168,7 +204,7 @@ body::before {
     color: #fff;
     background: linear-gradient(135deg, #6366f1, #8b5cf6);
     box-shadow: 0 12px 35px rgba(99,102,241,0.45);
-    transition: 0.3s;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .link-list a:hover {
@@ -203,19 +239,11 @@ body::before {
         </p>
 
         <div class="button-group">
-            <a
-                href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84"
-                target="_blank"
-                class="download-btn"
-            >
+            <a href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank" class="download-btn">
                 DOWNLOAD DLC
             </a>
 
-            <a
-                href="https://modsfire.com/M52SCl0LO3iLIK2"
-                target="_blank"
-                class="download-btn"
-            >
+            <a href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank" class="download-btn">
                 DOWNLOAD storage.dll
             </a>
         </div>
