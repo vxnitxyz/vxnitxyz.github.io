@@ -48,23 +48,23 @@
 
         .particle {
             position: absolute;
-            opacity: 0.8;
+            opacity: 0;
             animation: christmasFall linear infinite;
         }
 
         @keyframes christmasFall {
             0% {
-                transform: translateY(-100px) rotate(0deg);
+                transform: translateY(-100px) translateX(0) rotate(0deg);
                 opacity: 0;
             }
             10% {
-                opacity: 0.8;
+                opacity: 1;
             }
             90% {
-                opacity: 0.8;
+                opacity: 1;
             }
             100% {
-                transform: translateY(100vh) rotate(360deg);
+                transform: translateY(100vh) translateX(var(--drift)) rotate(360deg);
                 opacity: 0;
             }
         }
@@ -243,23 +243,29 @@
         </div>
     </div>
 
-    <!-- JavaScript für Weihnachts-Partikel -->
+    <!-- JavaScript für verbesserten Weihnachts-Partikel-Effekt -->
     <script>
         const particlesContainer = document.getElementById('particles');
-        const symbols = ['✦', '✨', '❄', '★', '❅']; // Weihnachts-Symbole: Stern, Funkeln, Schneekristall
-        const colors = ['#ffd700', '#ffffff', '#c0c0c0', '#e879f9', '#a855f7']; // Gold, Weiß, Silber, passend zum Theme
-        const count = 40; // Dezente Anzahl
+        const symbols = ['✦', '✨', '❄', '★', '❅', '✴', '❆']; // Mehr Weihnachts-Symbole
+        const colors = ['#ffd700', '#ffffff', '#c0c0c0', '#e879f9', '#a855f7', '#ff69b4']; // Gold, Weiß, Silber, Lila/Rosa für Theme
+        const count = 50; // Mehr für gleichmäßigen Fall
 
         for (let i = 0; i < count; i++) {
             const particle = document.createElement('div');
             particle.classList.add('particle');
             particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
             particle.style.color = colors[Math.floor(Math.random() * colors.length)];
-            particle.style.fontSize = (Math.random() * 12 + 12) + 'px';
+            particle.style.fontSize = (Math.random() * 12 + 10) + 'px';
 
+            // Voll random Position
             const left = Math.random() * 100 + 'vw';
-            const duration = Math.random() * 15 + 15 + 's';
-            const delay = Math.random() * 20 + 's';
+            // Leichter Seitwärts-Drift für natürlichen Fall
+            const drift = (Math.random() - 0.5) * 200 + 'px'; // -100 bis +100px seitwärts
+            particle.style.setProperty('--drift', drift);
+
+            // Mehr Variation in Geschwindigkeit und Startzeit
+            const duration = Math.random() * 10 + 15 + 's'; // 15-25s
+            const delay = Math.random() * 15 + 's'; // Bis zu 15s Delay für stetigen Nachschub
 
             particle.style.left = left;
             particle.style.animationDuration = duration;
