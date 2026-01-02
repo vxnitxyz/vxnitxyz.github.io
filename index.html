@@ -3,213 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETS2 DLC Package v1.57.2.x</title>
-    <style>
-        /* Basic reset */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        /* Textauswahl deaktivieren */
-        body, .container, .card, * {
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-        }
-
-        /* Kleiner schwarzer Punkt als Cursor */
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: linear-gradient(135deg, #1a0b2e, #2d1b4e);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="%23000000"/></svg>') 6 6, auto;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Weihnachts-Partikel Container */
-        .christmas-particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            opacity: 0;
-            animation: christmasFall linear infinite;
-        }
-
-        @keyframes christmasFall {
-            0% {
-                transform: translateY(-100px) translateX(0) rotate(0deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) translateX(var(--drift)) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        /* Originaler Hintergrund-Effekt */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(138,43,226,0.15), transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(75,0,130,0.1), transparent 50%);
-            opacity: 0.4;
-            pointer-events: none;
-        }
-
-        .container {
-            max-width: 900px;
-            text-align: center;
-            z-index: 1;
-            position: relative;
-        }
-
-        /* Logo mit Glow */
-        .logo {
-            font-size: 3.2rem;
-            font-weight: 800;
-            background: linear-gradient(45deg, #a855f7, #e879f9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
-        }
-
-        .subtitle {
-            margin-top: 10px;
-            color: #b0b0b0;
-            font-size: 1.2rem;
-        }
-
-        /* Card mit Glow */
-        .card {
-            margin-top: 50px;
-            padding: 40px;
-            background: rgba(139,92,246,0.1);
-            backdrop-filter: blur(15px);
-            border-radius: 25px;
-            border: 2px solid rgba(168,85,247,0.4);
-            box-shadow: 
-                0 15px 50px rgba(139,92,246,0.4),
-                0 0 60px rgba(168,85,247,0.3),
-                inset 0 0 30px rgba(168,85,247,0.1);
-            transition: all 0.4s ease;
-            opacity: 0;
-            animation: fadeIn 1s ease forwards;
-            animation-delay: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(168,85,247,0.7);
-            box-shadow: 
-                0 25px 70px rgba(139,92,246,0.6),
-                0 0 80px rgba(168,85,247,0.5),
-                inset 0 0 40px rgba(168,85,247,0.2);
-        }
-
-        .card-title {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(168,85,247,0.4);
-        }
-
-        .version, .badge {
-            display: inline-block;
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-weight: bold;
-            margin: 15px 8px 10px;
-            box-shadow: 
-                0 6px 20px rgba(0,0,0,0.3),
-                inset 0 0 20px rgba(255,255,255,0.2);
-            animation: subtlePulse 4s ease-in-out infinite;
-        }
-
-        .version { background: linear-gradient(135deg, #8b5cf6, #c084fc); }
-        .compatible { background: #10b981; }
-        .detectable { background: #ef4444; }
-
-        @keyframes subtlePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
-        }
-
-        .description {
-            margin: 25px 0;
-            color: #d0d0d0;
-            line-height: 1.7;
-            font-size: 1.1rem;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .download-btn {
-            padding: 18px 50px;
-            background: linear-gradient(135deg, #8b5cf6, #a855f7);
-            color: white;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            box-shadow: 
-                0 10px 30px rgba(139,92,246,0.5),
-                0 0 30px rgba(168,85,247,0.4);
-            transition: all 0.4s ease;
-            cursor: inherit;
-        }
-
-        .download-btn:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 
-                0 20px 50px rgba(139,92,246,0.8),
-                0 0 60px rgba(168,85,247,0.8);
-        }
-
-        .footer {
-            margin-top: 80px;
-            color: #888;
-            font-size: 0.9rem;
-            text-shadow: 0 0 10px rgba(168,85,247,0.2);
-        }
-
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-    </style>
+    <meta name="description" content="Euro Truck Simulator 2 DLC Package v1.57.2.x - Full DLC package with all required files">
+    <meta name="keywords" content="ETS2, Euro Truck Simulator 2, DLC, Package, v1.57.2">
+    <meta name="author" content="vxnitxyz">
+    <title>ETS2 DLC Package v1.57.2.x | Euro Truck Simulator 2</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Weihnachts-Partikel Effekt -->
+    <!-- Animated Particle Background Effect -->
     <div class="christmas-particles" id="particles"></div>
 
     <div class="container">
@@ -218,61 +20,85 @@
 
         <div class="card">
             <h2 class="card-title">Cracked DLC</h2>
-            <div class="version">v1.57.2.x</div>
-
-            <div class="badge compatible">Compatible with TruckersMP</div>
-            <div class="badge detectable">DETECTABLE</div>
+            
+            <div class="badge-group">
+                <div class="version">v1.57.2.x</div>
+                <div class="badge warning">⚠️ Not Compatible with TruckersMP</div>
+                <div class="badge detectable">🔍 DETECTABLE (TruckersMP only)</div>
+            </div>
 
             <p class="description">
-                Full DLC package for Euro Truck Simulator 2.<br>
-                Includes all required files for multiplayer use.
+                Full DLC package for <strong>Euro Truck Simulator 2</strong>.<br>
+                Includes all required files for single-player use.<br>
+                <strong>Note:</strong> This package is detectable in TruckersMP multiplayer.
             </p>
 
             <div class="button-group">
-                <a href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank" class="download-btn">
-                    DOWNLOAD DLC
+                <a href="https://mega.nz/file/Q6tW0bzK#_AspG-YbGeV374ELCAZ9h27-Fu1sqYjYYbcJU2nMC84" target="_blank" rel="noopener noreferrer" class="download-btn">
+                    <span class="icon">⬇️</span>
+                    <span>DOWNLOAD DLC</span>
                 </a>
-                <a href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank" class="download-btn">
-                    DOWNLOAD storage.dll
+                <a href="https://modsfire.com/M52SCl0LO3iLIK2" target="_blank" rel="noopener noreferrer" class="download-btn">
+                    <span class="icon">💾</span>
+                    <span>DOWNLOAD storage.dll</span>
                 </a>
             </div>
         </div>
 
         <div class="footer">
-            Maintained by vxnitxyz
+            <p>Maintained by <strong>vxnitxyz</strong></p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Use responsibly and in accordance with game terms of service</p>
         </div>
     </div>
 
-    <!-- JavaScript für verbesserten Weihnachts-Partikel-Effekt -->
+    <!-- Enhanced Particle Effect Script -->
     <script>
-        const particlesContainer = document.getElementById('particles');
-        const symbols = ['✦', '✨', '❄', '★', '❅', '✴', '❆']; // Mehr Weihnachts-Symbole
-        const colors = ['#ffd700', '#ffffff', '#c0c0c0', '#e879f9', '#a855f7', '#ff69b4']; // Gold, Weiß, Silber, Lila/Rosa für Theme
-        const count = 50; // Mehr für gleichmäßigen Fall
-
-        for (let i = 0; i < count; i++) {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
-            particle.style.color = colors[Math.floor(Math.random() * colors.length)];
-            particle.style.fontSize = (Math.random() * 12 + 10) + 'px';
-
-            // Voll random Position
-            const left = Math.random() * 100 + 'vw';
-            // Leichter Seitwärts-Drift für natürlichen Fall
-            const drift = (Math.random() - 0.5) * 200 + 'px'; // -100 bis +100px seitwärts
-            particle.style.setProperty('--drift', drift);
-
-            // Mehr Variation in Geschwindigkeit und Startzeit
-            const duration = Math.random() * 10 + 15 + 's'; // 15-25s
-            const delay = Math.random() * 15 + 's'; // Bis zu 15s Delay für stetigen Nachschub
-
-            particle.style.left = left;
-            particle.style.animationDuration = duration;
-            particle.style.animationDelay = delay;
-
-            particlesContainer.appendChild(particle);
-        }
+        (function() {
+            'use strict';
+            
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            // Particle symbols and colors
+            const symbols = ['✦', '✨', '❄', '★', '❅', '✴', '❆', '⭐', '💫'];
+            const colors = ['#ffd700', '#ffffff', '#c0c0c0', '#e879f9', '#a855f7', '#ff69b4', '#a78bfa'];
+            const particleCount = 60;
+            
+            // Create particles
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.fontSize = (Math.random() * 14 + 10) + 'px';
+                
+                // Random horizontal position
+                const left = Math.random() * 100 + 'vw';
+                
+                // Sideways drift for natural fall
+                const drift = (Math.random() - 0.5) * 250 + 'px';
+                particle.style.setProperty('--drift', drift);
+                
+                // Variable speed and delay
+                const duration = Math.random() * 12 + 18 + 's'; // 18-30s
+                const delay = Math.random() * 20 + 's'; // Up to 20s delay
+                
+                particle.style.left = left;
+                particle.style.animationDuration = duration;
+                particle.style.animationDelay = delay;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // Performance optimization: reduce particles on mobile
+            if (window.innerWidth < 768) {
+                const particles = particlesContainer.querySelectorAll('.particle');
+                const removeCount = Math.floor(particles.length * 0.4);
+                for (let i = 0; i < removeCount; i++) {
+                    particles[Math.floor(Math.random() * particles.length)].remove();
+                }
+            }
+        })();
     </script>
 
 </body>

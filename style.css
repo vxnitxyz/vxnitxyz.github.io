@@ -1,1 +1,577 @@
+/* ============================================
+   Modern CSS Reset & Base Styles
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
+:root {
+    /* Color Palette */
+    --primary-purple: #8b5cf6;
+    --primary-purple-light: #a855f7;
+    --primary-purple-dark: #6d28d9;
+    --accent-pink: #e879f9;
+    --accent-gold: #ffd700;
+    
+    /* Background Colors */
+    --bg-dark: #0f0a1a;
+    --bg-gradient-start: #1a0b2e;
+    --bg-gradient-end: #2d1b4e;
+    
+    /* Text Colors */
+    --text-primary: #ffffff;
+    --text-secondary: #d0d0d0;
+    --text-muted: #888888;
+    
+    /* Badge Colors */
+    --badge-success: #10b981;
+    --badge-warning: #f59e0b;
+    --badge-danger: #ef4444;
+    
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 10px 30px rgba(139, 92, 246, 0.3);
+    --shadow-lg: 0 20px 50px rgba(139, 92, 246, 0.5);
+    --shadow-glow: 0 0 60px rgba(168, 85, 247, 0.4);
+    
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 10px;
+    --radius-md: 20px;
+    --radius-lg: 30px;
+    --radius-full: 50px;
+    
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.4s ease;
+    --transition-slow: 0.6s ease;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
+    background-attachment: fixed;
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    position: relative;
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Disable text selection */
+body, .container, .card, * {
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+/* Custom cursor */
+body {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12"><circle cx="6" cy="6" r="5" fill="%23000000"/></svg>') 6 6, auto;
+}
+
+/* ============================================
+   Animated Background Effects
+   ============================================ */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.15), transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(75, 0, 130, 0.1), transparent 50%),
+        radial-gradient(circle at 50% 20%, rgba(168, 85, 247, 0.08), transparent 50%);
+    opacity: 0.6;
+    pointer-events: none;
+    z-index: 0;
+    animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.7; }
+}
+
+/* Animated gradient orbs */
+body::after {
+    content: '';
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.1), transparent 70%);
+    top: -250px;
+    left: -250px;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatOrb 20s ease-in-out infinite;
+}
+
+@keyframes floatOrb {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(100px, 150px) scale(1.2); }
+    66% { transform: translate(-50px, 200px) scale(0.8); }
+}
+
+/* ============================================
+   Particle Effects
+   ============================================ */
+.christmas-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.particle {
+    position: absolute;
+    opacity: 0;
+    font-size: 1.2rem;
+    animation: particleFall linear infinite;
+    filter: drop-shadow(0 0 4px currentColor);
+}
+
+@keyframes particleFall {
+    0% {
+        transform: translateY(-100px) translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) translateX(var(--drift)) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* ============================================
+   Container & Layout
+   ============================================ */
+.container {
+    max-width: 1000px;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+    position: relative;
+    animation: containerFadeIn 1s ease forwards;
+}
+
+@keyframes containerFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+.logo {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-purple-light), var(--accent-pink), var(--accent-gold));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 0 30px rgba(168, 85, 247, 0.5);
+    margin-bottom: var(--spacing-xs);
+    letter-spacing: -0.02em;
+    animation: gradientShift 5s ease infinite;
+    position: relative;
+}
+
+@keyframes gradientShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, var(--primary-purple-light), transparent);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+.subtitle {
+    margin-top: var(--spacing-sm);
+    color: var(--text-secondary);
+    font-size: clamp(1rem, 3vw, 1.4rem);
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+/* ============================================
+   Card Component
+   ============================================ */
+.card {
+    margin-top: var(--spacing-xl);
+    padding: clamp(2rem, 5vw, 3.5rem);
+    background: rgba(139, 92, 246, 0.08);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-radius: var(--radius-md);
+    border: 2px solid rgba(168, 85, 247, 0.3);
+    box-shadow: 
+        var(--shadow-lg),
+        var(--shadow-glow),
+        inset 0 0 40px rgba(168, 85, 247, 0.05);
+    transition: all var(--transition-normal);
+    opacity: 0;
+    animation: cardFadeIn 1s ease forwards;
+    animation-delay: 0.3s;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.1), transparent 70%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.card:hover {
+    transform: translateY(-12px) scale(1.01);
+    border-color: rgba(168, 85, 247, 0.6);
+    box-shadow: 
+        0 30px 80px rgba(139, 92, 246, 0.6),
+        0 0 100px rgba(168, 85, 247, 0.5),
+        inset 0 0 50px rgba(168, 85, 247, 0.15);
+}
+
+.card-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: var(--spacing-md);
+    text-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* ============================================
+   Badges & Version
+   ============================================ */
+.badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    margin: var(--spacing-md) 0;
+}
+
+.version, .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 12px 28px;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 0 25px rgba(255, 255, 255, 0.15);
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    animation: badgePulse 4s ease-in-out infinite;
+}
+
+.version::before, .badge::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+}
+
+.version:hover::before, .badge:hover::before {
+    left: 100%;
+}
+
+@keyframes badgePulse {
+    0%, 100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 8px 25px rgba(0, 0, 0, 0.3),
+            inset 0 0 25px rgba(255, 255, 255, 0.15);
+    }
+    50% { 
+        transform: scale(1.05);
+        box-shadow: 
+            0 12px 35px rgba(0, 0, 0, 0.4),
+            inset 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.version {
+    background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-light));
+    font-size: 1.1rem;
+}
+
+.badge.compatible {
+    background: linear-gradient(135deg, var(--badge-success), #34d399);
+}
+
+.badge.detectable {
+    background: linear-gradient(135deg, var(--badge-danger), #f87171);
+}
+
+.badge.warning {
+    background: linear-gradient(135deg, var(--badge-warning), #fbbf24);
+}
+
+.version:hover, .badge:hover {
+    transform: translateY(-3px) scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* ============================================
+   Description
+   ============================================ */
+.description {
+    margin: var(--spacing-lg) 0;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.description strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.button-group {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: var(--spacing-xl);
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 18px 45px;
+    background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-light));
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--radius-full);
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    box-shadow: 
+        var(--shadow-md),
+        var(--shadow-glow);
+    transition: all var(--transition-normal);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
+}
+
+.download-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s ease;
+}
+
+.download-btn:hover::before {
+    left: 100%;
+}
+
+.download-btn:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 
+        0 25px 60px rgba(139, 92, 246, 0.7),
+        0 0 80px rgba(168, 85, 247, 0.6);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.download-btn:active {
+    transform: translateY(-4px) scale(1.02);
+}
+
+.download-btn .icon {
+    font-size: 1.2em;
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.footer {
+    margin-top: clamp(3rem, 8vw, 5rem);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    text-shadow: 0 0 10px rgba(168, 85, 247, 0.2);
+    opacity: 0.8;
+    transition: opacity var(--transition-fast);
+}
+
+.footer:hover {
+    opacity: 1;
+}
+
+.footer a {
+    color: var(--primary-purple-light);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.footer a:hover {
+    color: var(--accent-pink);
+    text-shadow: 0 0 10px rgba(232, 121, 249, 0.5);
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+    body {
+        padding: var(--spacing-sm);
+    }
+    
+    .card {
+        padding: var(--spacing-lg);
+        margin-top: var(--spacing-lg);
+    }
+    
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .download-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .badge-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .version, .badge {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        font-size: 2rem;
+    }
+    
+    .subtitle {
+        font-size: 0.9rem;
+    }
+    
+    .card-title {
+        font-size: 1.5rem;
+    }
+    
+    .download-btn {
+        padding: 16px 35px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ============================================
+   Accessibility
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus states for keyboard navigation */
+.download-btn:focus-visible {
+    outline: 3px solid var(--primary-purple-light);
+    outline-offset: 3px;
+}
