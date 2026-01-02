@@ -10,21 +10,236 @@
     <meta name="theme-color" content="#ffffff">
     <title>ETS2 DLC Package v1.57.2.x | Euro Truck Simulator 2</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        /* Dark Reader Bypass - Force light theme detection */
-        html {
+    <style id="anti-darkreader">
+        /* Aggressive Dark Reader Bypass */
+        html, html * {
             color-scheme: light !important;
             background-color: #ffffff !important;
+            filter: none !important;
+            -webkit-filter: none !important;
+        }
+        html[data-darkreader-mode],
+        html[data-darkreader-scheme],
+        html[data-darkreader-mode] *,
+        html[data-darkreader-scheme] * {
+            filter: none !important;
+            -webkit-filter: none !important;
+            background-color: inherit !important;
+            color: inherit !important;
         }
         body {
-            filter: invert(0) hue-rotate(0deg) !important;
+            filter: none !important;
+            -webkit-filter: none !important;
             background: linear-gradient(135deg, #1a0b2e, #2d1b4e) !important;
+            background-attachment: fixed !important;
         }
-        /* Prevent Dark Reader from applying filters */
+        /* Force no filters on all elements */
         * {
             filter: none !important;
+            -webkit-filter: none !important;
+        }
+        /* Prevent Dark Reader style injection */
+        style[data-darkreader-mode],
+        link[data-darkreader-mode] {
+            display: none !important;
         }
     </style>
+    <script>
+        // ULTRA AGGRESSIVE Dark Reader Bypass - Runs immediately
+        (function() {
+            'use strict';
+            
+            // Block Dark Reader by preventing style modifications
+            const blockStyleModifications = () => {
+                const originalSetProperty = CSSStyleDeclaration.prototype.setProperty;
+                CSSStyleDeclaration.prototype.setProperty = function(property, value, priority) {
+                    if (property === 'filter' || property === '-webkit-filter') {
+                        const val = String(value || '');
+                        if (val.includes('darkreader') || 
+                            (val.includes('invert') && !val.includes('invert(0)'))) {
+                            return; // Block the modification
+                        }
+                    }
+                    return originalSetProperty.call(this, property, value, priority);
+                };
+            };
+            
+            const antiDR = {
+                init: function() {
+                    blockStyleModifications();
+                    this.blockStyles();
+                    this.removeAttrs();
+                    this.forceStyles();
+                    this.startMonitoring();
+                },
+                blockStyles: function() {
+                    const removeDRStyles = () => {
+                        // Remove Dark Reader stylesheets
+                        document.querySelectorAll('style, link[rel="stylesheet"]').forEach(el => {
+                            try {
+                                if (el.href && el.href.includes('darkreader')) {
+                                    el.remove();
+                                    return;
+                                }
+                                if (el.textContent && el.textContent.includes('darkreader')) {
+                                    el.remove();
+                                    return;
+                                }
+                                // Check for Dark Reader attributes
+                                if (el.hasAttribute('data-darkreader-mode') || 
+                                    el.hasAttribute('data-darkreader-scheme')) {
+                                    el.remove();
+                                }
+                            } catch(e) {}
+                        });
+                        
+                        // Remove Dark Reader style tags from head
+                        document.head.querySelectorAll('style').forEach(style => {
+                            try {
+                                if (style.textContent && style.textContent.includes('darkreader')) {
+                                    style.remove();
+                                }
+                            } catch(e) {}
+                        });
+                    };
+                    removeDRStyles();
+                    // Run very frequently
+                    setInterval(removeDRStyles, 25);
+                },
+                removeAttrs: function() {
+                    const attrs = ['data-darkreader-mode', 'data-darkreader-scheme', 
+                                  'data-darkreader-bg', 'data-darkreader-text',
+                                  'data-darkreader-inline-bg', 'data-darkreader-inline-color',
+                                  'data-darkreader-inline-fill', 'data-darkreader-inline-stroke',
+                                  'data-darkreader-inline-outline'];
+                    const remove = (el) => {
+                        if (!el || !el.removeAttribute) return;
+                        attrs.forEach(attr => {
+                            if (el.hasAttribute(attr)) {
+                                el.removeAttribute(attr);
+                            }
+                        });
+                        if (el.style) {
+                            const filter = el.style.filter || el.style.webkitFilter || '';
+                            if (filter && (filter.includes('darkreader') || 
+                                (filter.includes('invert') && filter !== 'invert(0)' && !filter.includes('invert(0)')))) {
+                                el.style.removeProperty('filter');
+                                el.style.removeProperty('-webkit-filter');
+                                el.style.setProperty('filter', 'none', 'important');
+                                el.style.setProperty('-webkit-filter', 'none', 'important');
+                            }
+                        }
+                    };
+                    remove(document.documentElement);
+                    if (document.body) remove(document.body);
+                    try {
+                        document.querySelectorAll('*').forEach(remove);
+                    } catch(e) {}
+                },
+                forceStyles: function() {
+                    if (document.documentElement) {
+                        document.documentElement.style.setProperty('background-color', '#ffffff', 'important');
+                        document.documentElement.style.setProperty('color-scheme', 'light', 'important');
+                        document.documentElement.style.setProperty('filter', 'none', 'important');
+                        document.documentElement.style.setProperty('-webkit-filter', 'none', 'important');
+                    }
+                    if (document.body) {
+                        document.body.style.setProperty('background', 'linear-gradient(135deg, #1a0b2e, #2d1b4e)', 'important');
+                        document.body.style.setProperty('background-attachment', 'fixed', 'important');
+                        document.body.style.setProperty('filter', 'none', 'important');
+                        document.body.style.setProperty('-webkit-filter', 'none', 'important');
+                    }
+                },
+                startMonitoring: function() {
+                    // Ultra-fast monitoring with requestAnimationFrame
+                    const monitor = () => {
+                        this.removeAttrs();
+                        this.forceStyles();
+                        this.blockStyles();
+                        requestAnimationFrame(monitor);
+                    };
+                    requestAnimationFrame(monitor);
+                    
+                    // MutationObserver for DOM changes
+                    const obs = new MutationObserver((mutations) => {
+                        let changed = false;
+                        mutations.forEach((mutation) => {
+                            if (mutation.type === 'attributes') {
+                                const attr = mutation.attributeName;
+                                if (attr && attr.includes('darkreader')) {
+                                    mutation.target.removeAttribute(attr);
+                                    changed = true;
+                                }
+                                if (attr === 'style') {
+                                    const filter = mutation.target.style?.filter || '';
+                                    if (filter.includes('darkreader') || 
+                                        (filter.includes('invert') && filter !== 'invert(0)' && !filter.includes('invert(0)'))) {
+                                        mutation.target.style.setProperty('filter', 'none', 'important');
+                                        mutation.target.style.setProperty('-webkit-filter', 'none', 'important');
+                                        changed = true;
+                                    }
+                                }
+                            }
+                            if (mutation.type === 'childList') {
+                                mutation.addedNodes.forEach(node => {
+                                    if (node.nodeType === 1) {
+                                        if (node.tagName === 'STYLE' || node.tagName === 'LINK') {
+                                            if (node.href?.includes('darkreader') || 
+                                                node.textContent?.includes('darkreader') ||
+                                                node.hasAttribute('data-darkreader-mode')) {
+                                                node.remove();
+                                                changed = true;
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                        if (changed) {
+                            this.removeAttrs();
+                            this.forceStyles();
+                        }
+                    });
+                    
+                    if (document.documentElement) {
+                        obs.observe(document.documentElement, {
+                            attributes: true,
+                            childList: true,
+                            subtree: true,
+                            attributeFilter: null
+                        });
+                    }
+                    if (document.head) {
+                        obs.observe(document.head, {
+                            childList: true,
+                            subtree: true
+                        });
+                    }
+                }
+            };
+            
+            // Run immediately - multiple times
+            antiDR.init();
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', () => {
+                    antiDR.init();
+                    setTimeout(antiDR.init, 0);
+                    setTimeout(antiDR.init, 10);
+                    setTimeout(antiDR.init, 50);
+                });
+            } else {
+                antiDR.init();
+                setTimeout(antiDR.init, 0);
+                setTimeout(antiDR.init, 10);
+                setTimeout(antiDR.init, 50);
+            }
+            
+            // Also run on window load
+            window.addEventListener('load', () => {
+                antiDR.init();
+            });
+        })();
+    </script>
 </head>
 <body>
 
@@ -68,127 +283,6 @@
         </div>
     </div>
 
-    <!-- Dark Reader Bypass Script -->
-    <script>
-        (function() {
-            'use strict';
-            
-            // Dark Reader Detection and Bypass
-            const bypassDarkReader = () => {
-                // Remove all Dark Reader attributes from html
-                const darkReaderAttrs = ['data-darkreader-mode', 'data-darkreader-scheme', 
-                                        'data-darkreader-bg', 'data-darkreader-text',
-                                        'data-darkreader-inline-bg', 'data-darkreader-inline-color'];
-                darkReaderAttrs.forEach(attr => {
-                    if (document.documentElement.hasAttribute(attr)) {
-                        document.documentElement.removeAttribute(attr);
-                    }
-                    if (document.body.hasAttribute(attr)) {
-                        document.body.removeAttribute(attr);
-                    }
-                });
-                
-                // Remove Dark Reader filters from all elements
-                const removeFilters = (element) => {
-                    if (element && element.style) {
-                        const filter = element.style.filter || element.style.webkitFilter || '';
-                        if (filter.includes('darkreader') || 
-                            filter.includes('invert') ||
-                            (filter.includes('brightness') && filter !== 'brightness(1.1)')) {
-                            element.style.setProperty('filter', 'none', 'important');
-                            element.style.setProperty('-webkit-filter', 'none', 'important');
-                        }
-                    }
-                };
-                
-                // Remove filters from html, body, and all elements
-                removeFilters(document.documentElement);
-                removeFilters(document.body);
-                document.querySelectorAll('*').forEach(removeFilters);
-                
-                // Force original background and prevent Dark Reader modifications
-                document.documentElement.style.setProperty('background-color', '#ffffff', 'important');
-                document.documentElement.style.setProperty('color-scheme', 'light', 'important');
-                document.body.style.setProperty('background', 'linear-gradient(135deg, #1a0b2e, #2d1b4e)', 'important');
-                document.body.style.setProperty('filter', 'none', 'important');
-                document.body.style.setProperty('-webkit-filter', 'none', 'important');
-                
-                // Remove Dark Reader injected stylesheets
-                Array.from(document.styleSheets).forEach(sheet => {
-                    try {
-                        if (sheet.href && sheet.href.includes('darkreader')) {
-                            sheet.ownerNode?.remove();
-                        }
-                    } catch(e) {}
-                });
-            };
-            
-            // Observe for Dark Reader mutations - more comprehensive
-            const observer = new MutationObserver((mutations) => {
-                let shouldBypass = false;
-                mutations.forEach((mutation) => {
-                    if (mutation.type === 'attributes') {
-                        const attrName = mutation.attributeName;
-                        if (attrName && attrName.includes('darkreader')) {
-                            mutation.target.removeAttribute(attrName);
-                            shouldBypass = true;
-                        }
-                        if (attrName === 'style') {
-                            const filter = mutation.target.style?.filter || '';
-                            if (filter.includes('darkreader') || 
-                                (filter.includes('invert') && !filter.includes('invert(0)'))) {
-                                mutation.target.style.setProperty('filter', 'none', 'important');
-                                mutation.target.style.setProperty('-webkit-filter', 'none', 'important');
-                                shouldBypass = true;
-                            }
-                        }
-                    }
-                    if (mutation.type === 'childList') {
-                        mutation.addedNodes.forEach(node => {
-                            if (node.nodeType === 1) { // Element node
-                                if (node.tagName === 'STYLE' && node.textContent?.includes('darkreader')) {
-                                    node.remove();
-                                    shouldBypass = true;
-                                }
-                            }
-                        });
-                    }
-                });
-                if (shouldBypass) {
-                    bypassDarkReader();
-                }
-            });
-            
-            // Observe document and body for all attribute changes
-            observer.observe(document.documentElement, {
-                attributes: true,
-                attributeFilter: null, // Watch all attributes
-                childList: true,
-                subtree: false
-            });
-            
-            observer.observe(document.body, {
-                attributes: true,
-                attributeFilter: null,
-                childList: true,
-                subtree: true
-            });
-            
-            observer.observe(document.head, {
-                childList: true,
-                subtree: true
-            });
-            
-            // Run bypass immediately and on DOM ready
-            bypassDarkReader();
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', bypassDarkReader);
-            }
-            
-            // Run bypass periodically to catch late Dark Reader modifications
-            setInterval(bypassDarkReader, 100);
-        })();
-    </script>
 
     <!-- Enhanced Particle Effect Script -->
     <script>

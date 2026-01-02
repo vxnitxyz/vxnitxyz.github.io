@@ -56,7 +56,7 @@
 }
 
 /* ============================================
-   Dark Reader Bypass - Advanced Techniques
+   Dark Reader Bypass - Ultra Aggressive
    ============================================ */
 html {
     scroll-behavior: smooth;
@@ -65,7 +65,40 @@ html {
     background-color: #ffffff !important;
 }
 
-/* Prevent Dark Reader filter application */
+/* COMPREHENSIVE Dark Reader Blocking */
+html[data-darkreader-mode],
+html[data-darkreader-scheme],
+html[data-darkreader-bg],
+html[data-darkreader-text],
+html[data-darkreader-inline-bg],
+html[data-darkreader-inline-color],
+html[data-darkreader-inline-fill],
+html[data-darkreader-inline-stroke],
+body[data-darkreader-mode],
+body[data-darkreader-scheme],
+body[data-darkreader-bg],
+body[data-darkreader-text],
+*[data-darkreader-mode],
+*[data-darkreader-scheme],
+*[data-darkreader-bg],
+*[data-darkreader-text] {
+    filter: none !important;
+    -webkit-filter: none !important;
+    background: inherit !important;
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+/* Block ALL filter applications */
+html,
+body,
+html *,
+body * {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Override any inline filter styles */
 html[style*="filter"],
 body[style*="filter"],
 *[style*="filter"] {
@@ -73,51 +106,42 @@ body[style*="filter"],
     -webkit-filter: none !important;
 }
 
-/* Override Dark Reader's background modifications */
+/* Force original backgrounds */
 html[data-darkreader-mode],
-html[data-darkreader-scheme],
+html[data-darkreader-scheme] {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+}
+
 body[data-darkreader-mode],
 body[data-darkreader-scheme] {
-    filter: none !important;
     background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)) !important;
     background-attachment: fixed !important;
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
-/* Prevent Dark Reader from inverting colors */
+/* Prevent Dark Reader from inverting colors - ALL modes */
 html[data-darkreader-mode="dynamic"],
 html[data-darkreader-mode="filter"],
-html[data-darkreader-mode="static"] {
-    filter: invert(0) hue-rotate(0deg) brightness(1) contrast(1) saturate(1) !important;
-}
-
-/* Global protection - prevent Dark Reader filters on all elements */
-*[style*="filter"] {
+html[data-darkreader-mode="static"],
+html[data-darkreader-mode="engine"],
+body[data-darkreader-mode="dynamic"],
+body[data-darkreader-mode="filter"],
+body[data-darkreader-mode="static"],
+body[data-darkreader-mode="engine"] {
     filter: none !important;
     -webkit-filter: none !important;
+    background: inherit !important;
 }
 
-/* Protect text colors from Dark Reader */
-.logo,
-.subtitle,
-.card-title,
-.description,
-.description strong,
-.version,
-.badge,
-.download-btn,
-.footer {
-    color: inherit !important;
-    filter: none !important;
-    -webkit-filter: none !important;
-}
-
-/* Protect backgrounds from Dark Reader - keep original but prevent filters */
-.card[style*="background"],
-.version[style*="background"],
-.badge[style*="background"],
-.download-btn[style*="background"] {
-    filter: none !important;
-    -webkit-filter: none !important;
+/* Hide Dark Reader injected styles */
+style[data-darkreader-mode],
+link[data-darkreader-mode],
+style[data-darkreader-scheme],
+link[data-darkreader-scheme] {
+    display: none !important;
+    visibility: hidden !important;
 }
 
 /* ============================================
