@@ -39,10 +39,13 @@ The website provides:
 - Download link for the required `storage.dll` file
 - Version and compatibility information
 
+**Note**: These DLCs work perfectly in normal ETS2 single-player mode, but are detectable in TruckersMP multiplayer.
+
 ## ⚠️ Important Notes
 
-- **DETECTABLE**: The DLC package is marked as detectable PS: Only in TruckersMP
-- **Compatibility**: Compatible with TruckersMP multiplayer (no longer)
+- **✅ Works in Normal ETS2**: The DLC package works perfectly in standard Euro Truck Simulator 2 (single-player mode)
+- **🔍 DETECTABLE in TruckersMP**: The DLC package is detectable in TruckersMP multiplayer - use at your own risk
+- **🚫 Not Compatible with TruckersMP**: This package is no longer compatible with TruckersMP multiplayer
 - **Maintenance**: Maintained by vxnitxyz
 
 ## 🛠️ Technologies Used
