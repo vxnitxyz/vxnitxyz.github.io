@@ -6,8 +6,25 @@
     <meta name="description" content="Euro Truck Simulator 2 DLC Package v1.57.2.x - Full DLC package with all required files">
     <meta name="keywords" content="ETS2, Euro Truck Simulator 2, DLC, Package, v1.57.2">
     <meta name="author" content="vxnitxyz">
+    <meta name="color-scheme" content="light">
+    <meta name="theme-color" content="#ffffff">
     <title>ETS2 DLC Package v1.57.2.x | Euro Truck Simulator 2</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Dark Reader Bypass - Force light theme detection */
+        html {
+            color-scheme: light !important;
+            background-color: #ffffff !important;
+        }
+        body {
+            filter: invert(0) hue-rotate(0deg) !important;
+            background: linear-gradient(135deg, #1a0b2e, #2d1b4e) !important;
+        }
+        /* Prevent Dark Reader from applying filters */
+        * {
+            filter: none !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -50,6 +67,128 @@
             <p style="margin-top: 0.5rem; font-size: 0.85rem;">Use responsibly and in accordance with game terms of service</p>
         </div>
     </div>
+
+    <!-- Dark Reader Bypass Script -->
+    <script>
+        (function() {
+            'use strict';
+            
+            // Dark Reader Detection and Bypass
+            const bypassDarkReader = () => {
+                // Remove all Dark Reader attributes from html
+                const darkReaderAttrs = ['data-darkreader-mode', 'data-darkreader-scheme', 
+                                        'data-darkreader-bg', 'data-darkreader-text',
+                                        'data-darkreader-inline-bg', 'data-darkreader-inline-color'];
+                darkReaderAttrs.forEach(attr => {
+                    if (document.documentElement.hasAttribute(attr)) {
+                        document.documentElement.removeAttribute(attr);
+                    }
+                    if (document.body.hasAttribute(attr)) {
+                        document.body.removeAttribute(attr);
+                    }
+                });
+                
+                // Remove Dark Reader filters from all elements
+                const removeFilters = (element) => {
+                    if (element && element.style) {
+                        const filter = element.style.filter || element.style.webkitFilter || '';
+                        if (filter.includes('darkreader') || 
+                            filter.includes('invert') ||
+                            (filter.includes('brightness') && filter !== 'brightness(1.1)')) {
+                            element.style.setProperty('filter', 'none', 'important');
+                            element.style.setProperty('-webkit-filter', 'none', 'important');
+                        }
+                    }
+                };
+                
+                // Remove filters from html, body, and all elements
+                removeFilters(document.documentElement);
+                removeFilters(document.body);
+                document.querySelectorAll('*').forEach(removeFilters);
+                
+                // Force original background and prevent Dark Reader modifications
+                document.documentElement.style.setProperty('background-color', '#ffffff', 'important');
+                document.documentElement.style.setProperty('color-scheme', 'light', 'important');
+                document.body.style.setProperty('background', 'linear-gradient(135deg, #1a0b2e, #2d1b4e)', 'important');
+                document.body.style.setProperty('filter', 'none', 'important');
+                document.body.style.setProperty('-webkit-filter', 'none', 'important');
+                
+                // Remove Dark Reader injected stylesheets
+                Array.from(document.styleSheets).forEach(sheet => {
+                    try {
+                        if (sheet.href && sheet.href.includes('darkreader')) {
+                            sheet.ownerNode?.remove();
+                        }
+                    } catch(e) {}
+                });
+            };
+            
+            // Observe for Dark Reader mutations - more comprehensive
+            const observer = new MutationObserver((mutations) => {
+                let shouldBypass = false;
+                mutations.forEach((mutation) => {
+                    if (mutation.type === 'attributes') {
+                        const attrName = mutation.attributeName;
+                        if (attrName && attrName.includes('darkreader')) {
+                            mutation.target.removeAttribute(attrName);
+                            shouldBypass = true;
+                        }
+                        if (attrName === 'style') {
+                            const filter = mutation.target.style?.filter || '';
+                            if (filter.includes('darkreader') || 
+                                (filter.includes('invert') && !filter.includes('invert(0)'))) {
+                                mutation.target.style.setProperty('filter', 'none', 'important');
+                                mutation.target.style.setProperty('-webkit-filter', 'none', 'important');
+                                shouldBypass = true;
+                            }
+                        }
+                    }
+                    if (mutation.type === 'childList') {
+                        mutation.addedNodes.forEach(node => {
+                            if (node.nodeType === 1) { // Element node
+                                if (node.tagName === 'STYLE' && node.textContent?.includes('darkreader')) {
+                                    node.remove();
+                                    shouldBypass = true;
+                                }
+                            }
+                        });
+                    }
+                });
+                if (shouldBypass) {
+                    bypassDarkReader();
+                }
+            });
+            
+            // Observe document and body for all attribute changes
+            observer.observe(document.documentElement, {
+                attributes: true,
+                attributeFilter: null, // Watch all attributes
+                childList: true,
+                subtree: false
+            });
+            
+            observer.observe(document.body, {
+                attributes: true,
+                attributeFilter: null,
+                childList: true,
+                subtree: true
+            });
+            
+            observer.observe(document.head, {
+                childList: true,
+                subtree: true
+            });
+            
+            // Run bypass immediately and on DOM ready
+            bypassDarkReader();
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', bypassDarkReader);
+            }
+            
+            // Run bypass periodically to catch late Dark Reader modifications
+            setInterval(bypassDarkReader, 100);
+        })();
+    </script>
 
     <!-- Enhanced Particle Effect Script -->
     <script>

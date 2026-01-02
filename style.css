@@ -56,17 +56,79 @@
 }
 
 /* ============================================
-   Base Styles
+   Dark Reader Bypass - Advanced Techniques
    ============================================ */
 html {
     scroll-behavior: smooth;
+    /* Force light color scheme to confuse Dark Reader */
+    color-scheme: light !important;
+    background-color: #ffffff !important;
 }
+
+/* Prevent Dark Reader filter application */
+html[style*="filter"],
+body[style*="filter"],
+*[style*="filter"] {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Override Dark Reader's background modifications */
+html[data-darkreader-mode],
+html[data-darkreader-scheme],
+body[data-darkreader-mode],
+body[data-darkreader-scheme] {
+    filter: none !important;
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)) !important;
+    background-attachment: fixed !important;
+}
+
+/* Prevent Dark Reader from inverting colors */
+html[data-darkreader-mode="dynamic"],
+html[data-darkreader-mode="filter"],
+html[data-darkreader-mode="static"] {
+    filter: invert(0) hue-rotate(0deg) brightness(1) contrast(1) saturate(1) !important;
+}
+
+/* Global protection - prevent Dark Reader filters on all elements */
+*[style*="filter"] {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Protect text colors from Dark Reader */
+.logo,
+.subtitle,
+.card-title,
+.description,
+.description strong,
+.version,
+.badge,
+.download-btn,
+.footer {
+    color: inherit !important;
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* Protect backgrounds from Dark Reader - keep original but prevent filters */
+.card[style*="background"],
+.version[style*="background"],
+.badge[style*="background"],
+.download-btn[style*="background"] {
+    filter: none !important;
+    -webkit-filter: none !important;
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
 
 body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
-    background-attachment: fixed;
-    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end)) !important;
+    background-attachment: fixed !important;
+    color: var(--text-primary) !important;
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -77,6 +139,9 @@ body {
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    /* Force no filter to prevent Dark Reader modifications */
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 /* Disable text selection */
@@ -252,21 +317,24 @@ body::after {
 .card {
     margin-top: var(--spacing-xl);
     padding: clamp(2rem, 5vw, 3.5rem);
-    background: rgba(139, 92, 246, 0.08);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(139, 92, 246, 0.08) !important;
+    backdrop-filter: blur(20px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     border-radius: var(--radius-md);
-    border: 2px solid rgba(168, 85, 247, 0.3);
+    border: 2px solid rgba(168, 85, 247, 0.3) !important;
     box-shadow: 
         var(--shadow-lg),
         var(--shadow-glow),
-        inset 0 0 40px rgba(168, 85, 247, 0.05);
+        inset 0 0 40px rgba(168, 85, 247, 0.05) !important;
     transition: all var(--transition-normal);
     opacity: 0;
     animation: cardFadeIn 1s ease forwards;
     animation-delay: 0.3s;
     position: relative;
     overflow: hidden;
+    /* Dark Reader bypass */
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 .card::before {
@@ -428,8 +496,8 @@ body::after {
     align-items: center;
     gap: var(--spacing-xs);
     padding: 18px 45px;
-    background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-light));
-    color: var(--text-primary);
+    background: linear-gradient(135deg, var(--primary-purple), var(--primary-purple-light)) !important;
+    color: var(--text-primary) !important;
     text-decoration: none;
     border-radius: var(--radius-full);
     font-weight: 700;
@@ -437,12 +505,15 @@ body::after {
     letter-spacing: 0.05em;
     box-shadow: 
         var(--shadow-md),
-        var(--shadow-glow);
+        var(--shadow-glow) !important;
     transition: all var(--transition-normal);
     cursor: pointer;
     position: relative;
     overflow: hidden;
     border: 2px solid transparent;
+    /* Dark Reader bypass */
+    filter: none !important;
+    -webkit-filter: none !important;
 }
 
 .download-btn::before {
